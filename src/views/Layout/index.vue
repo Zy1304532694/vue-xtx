@@ -21,5 +21,8 @@ onMounted(() => {
   <LayoutHeader />
   <!-- 二级路由出口 -->
   <RouterView />
+  <!-- 二级路由出口 使用key 解决二级路由切换时，缓存问题 -->
+  <!-- <RouterView :key="$route.fullPath" /> -->
+
   <LayoutFooter />
 </template>
