@@ -4,9 +4,9 @@ import { onMounted, ref } from 'vue'
 import { onBeforeRouteUpdate } from 'vue-router'
 import { useRoute } from 'vue-router'
 
-const route = useRoute()
 
 export function useCategory() {
+  const route = useRoute()
   const categoryData = ref({})
   const getCategory = async (id = route.params.id) => {
     const res = await getCategoryAPI(id)

@@ -9,3 +9,10 @@ export function getCategoryAPI(id) {
   })
 }
 
+
+export function getSubCategoryAPI(id) {
+  return httpInstance({
+    url: '/category/sub/filter',
+    params: { id }
+  })
+}
