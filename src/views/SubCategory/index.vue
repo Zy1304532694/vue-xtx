@@ -14,7 +14,7 @@ const getSubCategory = async () => {
 onMounted(() => getSubCategory())
 
 //基础列表数据渲染
-const goodsList = ref({})
+const goodsList = ref([])
 const reqParams = ref({
   categoryId: route.params.id,
   page: 1,
@@ -31,6 +31,19 @@ onMounted(() => getGoodsList())
 const tabChange = () => {
   reqParams.value.page = 1
   getGoodsList()
+}
+
+// 加载更多
+const disabled = ref(false)
+const load = async () => {
+  reqParams.value.page++
+  const res = await getSubCategoryAPI(reqParams.value)
+  // goodsList.value.push(...res.result.items)
+  goodsList.value = [...goodsList.value, ...res.result.items]
+  // 如果返回的数据为空，则停止加载
+  if (res.result.items.length === 0) {
+    disabled.value = true
+  }
 }
 
 </script>
@@ -52,7 +65,7 @@ const tabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div class="body" v-infinite-scroll="load" :infinite-scroll-disabled="disabled">
         <!-- 商品列表-->
         <GoodsItem v-for="item in goodsList" :key="item.id" :good="item" />
       </div>
