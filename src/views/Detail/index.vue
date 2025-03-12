@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import DetailHot from './components/DetailHot.vue'
 import ImageView from '@/components/ImageView/index.vue'
+import XtxSku from '@/components/ImageView/XtxSku/index.vue'
 
 const route = useRoute()
 
@@ -15,6 +16,10 @@ const getGoodsDetail = async () => {
 }
 onMounted(() => getGoodsDetail())
 
+//Sku规格被操作时触发
+const changeSku = (sku) => {
+  console.log(sku)
+}
 
 </script>
 
@@ -25,9 +30,9 @@ onMounted(() => getGoodsDetail())
         <el-breadcrumb separator=">">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: `/category/${goods.categories[1].id}` }">{{ goods.categories[1].name
-          }}</el-breadcrumb-item>
+            }}</el-breadcrumb-item>
           <el-breadcrumb-item :to="{ path: `/category/${goods.categories[0].id}` }">{{ goods.categories[0].name
-          }}</el-breadcrumb-item>
+            }}</el-breadcrumb-item>
 
           <el-breadcrumb-item>{{ goods.name }}</el-breadcrumb-item>
         </el-breadcrumb>
@@ -87,7 +92,7 @@ onMounted(() => getGoodsDetail())
                 </dl>
               </div>
               <!-- sku组件 -->
-
+              <XtxSku :goods="goods" @change="changeSku"></XtxSku>
               <!-- 数据组件 -->
 
               <!-- 按钮组件 -->
